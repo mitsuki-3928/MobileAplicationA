@@ -39,10 +39,12 @@ public class MainActivity extends AppCompatActivity {
         binding.text.setText(R.string.text1);
         binding.button.setOnClickListener(view -> {
             var text = binding.editTextText.getText().toString();
-            binding.text.setText("押せた！");
+            binding.text.setText(text);
         });
 
-        binding.editTextText.addTextChangedListener(new TextWatcher() {
+
+
+        /*binding.editTextText.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -59,8 +61,14 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //文字を1つ入力されたときに呼ばれる
             }
-        });
+        });*/
 
         }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        prefDataStore.getString("name").ifPresent(name -> binding.text.setText(name));
+
     }
+}
