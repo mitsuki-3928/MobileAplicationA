@@ -3,12 +3,17 @@ package jp.ac.meijou.android.mobileappa;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.Optional;
 
 import jp.ac.meijou.android.mobileappa.databinding.ActivityMain2Binding;
 import jp.ac.meijou.android.mobileappa.databinding.ActivityMainBinding;
@@ -16,6 +21,26 @@ import jp.ac.meijou.android.mobileappa.databinding.ActivityMainBinding;
 public class MainActivity2 extends AppCompatActivity {
 
     private ActivityMain2Binding binding;
+
+    private final ActivityResultLauncher<Intent> getActivityResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                switch (result.getResultCode()) {
+                    case RESULT_OK -> {
+                        Optional.ofNullable(result.getData())
+                                .map(data -> data.getStringExtra("ret"))
+                                .map(text -> "Result: " + text)
+                                .ifPresent(text -> binding.textViewres.setText(text));
+                    }
+                    case RESULT_CANCELED -> {
+                        binding.textViewres.setText("Result: Canceled");
+                    }
+                    default -> {
+                        binding.textViewres.setText("Result: Unknown(" + result.getResultCode() + ")");
+                    }
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,5 +67,20 @@ public class MainActivity2 extends AppCompatActivity {
             intent.setData(Uri.parse("https://www.nogizaka46.com"));
             startActivity(intent);
         });
+
+        binding.button5.setOnClickListener(v -> {
+            var text = binding.editTextText3.getText().toString();
+            var intent = new Intent(this, MainActivity4.class);
+            intent.putExtra("title", text);
+            startActivity(intent);
+        });
+
+        // exac button
+        binding.buttonKidou.setOnClickListener(v -> {
+            var intent = new Intent(this, MainActivity4.class);
+            getActivityResult.launch(intent);
+        });
+
+
     }
 }

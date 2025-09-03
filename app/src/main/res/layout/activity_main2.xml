@@ -80,4 +80,26 @@
         app:layout_constraintTop_toTopOf="@+id/editTextText3"
         app:layout_constraintStart_toEndOf="@+id/editTextText3"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/textViewres"
+        android:layout_width="153dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="32dp"
+        android:text="Result:"
+        android:textSize="60px"
+        app:layout_constraintEnd_toStartOf="@id/button_kidou"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+
+    <Button
+        android:id="@+id/button_kidou"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="起動"
+        tools:layout_editor_absoluteX="255dp"
+        tools:layout_editor_absoluteY="343dp"
+        app:layout_constraintStart_toEndOf="@+id/textViewres"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewres"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
